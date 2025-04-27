@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Mind</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Money Mind</h1>
+    <div class="container" id="loginContainer">
+        <h2>Login</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Enter username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="container" id="homeContainer" style="display: none;">
+        <h2>Welcome to Money Mind</h2>
+        <p>Select an option:</p>
+        <button onclick="showSection('taxContainer')">Tax Calculator</button>
+        <button onclick="showSection('debtContainer')">Debt Scheduler</button>
+        <button onclick="showSection('calendarContainer')">Calendar</button>
+        <button onclick="showSection('classesContainer')">Classes Tracker</button>
+        <button onclick="logout()">Logout</button>
+        <div id="dashboard">
+            <h3>Dashboard</h3>
+            <p>Total Debt: <span id="totalDebt">$0.00</span></p>
+            <h4>Upcoming Notes</h4>
+            <div id="upcomingNotes"></div>
+            <h4>Weekly Classes</h4>
+            <div id="weeklyClasses"></div>
+        </div>
+    </div>
+
+    <div class="container" id="taxContainer" style="display: none;">
+        <h2>Tax Calculator</h2>
+        <label for="income">Annual Income ($):</label>
+        <input type="number" id="income" placeholder="Enter income">
+        <button onclick="calculateTax()">Calculate Tax</button>
+        <div id="taxResult" class="tax-result"></div>
+        <button onclick="showSection('homeContainer')">Back to Home</button>
+    </div>
+
+    <div class="container" id="debtContainer" style="display: none;">
+        <h2>Debt Scheduler</h2>
+        <label for="debtName">Debt Name:</label>
+        <input type="text" id="debtName" placeholder="e.g., Student Loan">
+        <label for="debtAmount">Total Amount ($):</label>
+        <input type="number" id="debtAmount" placeholder="Enter amount">
+        <label for="monthlyPayment">Monthly Payment ($):</label>
+        <input type="number" id="monthlyPayment" placeholder="Enter monthly payment">
+        <label for="dueDate">Next Payment Due Date:</label>
+        <input type="date" id="dueDate">
+        <button onclick="addDebt()">Add Debt</button>
+        <h3>Scheduled Debts</h3>
+        <div id="debtList" class="debt-list"></div>
+        <button onclick="showSection('homeContainer')">Back to Home</button>
+    </div>
+
+    <div class="container" id="calendarContainer" style="display: none;">
+        <h2>Calendar</h2>
+        <div id="calendarHeader">
+            <button onclick="prevMonth()">Previous</button>
+            <span id="monthYear"></span>
+            <button onclick="nextMonth()">Next</button>
+        </div>
+        <div id="calendar" class="calendar"></div>
+        <h3>Add Note</h3>
+        <label for="noteDate">Date:</label>
+        <input type="date" id="noteDate">
+        <label for="noteText">Note:</label>
+        <input type="text" id="noteText" placeholder="Enter note">
+        <button onclick="addNote()">Add Note</button>
+        <h3>Notes</h3>
+        <div id="notesList" class="notes-list"></div>
+        <button onclick="showSection('homeContainer')">Back to Home</button>
+    </div>
+
+    <div class="container" id="classesContainer" style="display: none;">
+        <h2>Classes Tracker</h2>
+        <label for="className">Course Name:</label>
+        <input type="text" id="className" placeholder="e.g., Calculus I">
+        <label for="classDayTime">Day/Time:</label>
+        <input type="text" id="classDayTime" placeholder="e.g., Mon/Wed 10:00-11:30">
+        <label for="classProfessor">Professor:</label>
+        <input type="text" id="classProfessor" placeholder="e.g., Dr. Smith">
+        <button onclick="addClass()">Add Class</button>
+        <h3>Your Classes</h3>
+        <div id="classesList" class="classes-list"></div>
+        <button onclick="showSection('homeContainer')">Back to Home</button>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="debtModal" style="display: none;">
+        <div class="modal-content">
+            <h3>Edit Debt</h3>
+            <label for="editDebtName">Debt Name:</label>
+            <input type="text" id="editDebtName" placeholder="e.g., Student Loan">
+            <label for="editDebtAmount">Total Amount ($):</label>
+            <input type="number" id="editDebtAmount" placeholder="Enter amount">
+            <label for="editMonthlyPayment">Monthly Payment ($):</label>
+            <input type="number" id="editMonthlyPayment" placeholder="Enter monthly payment">
+            <label for="editDueDate">Next Payment Due Date:</label>
+            <input type="date" id="editDueDate">
+            <button onclick="saveDebtEdit()">Save</button>
+            <button onclick="closeModal('debtModal')">Cancel</button>
+        </div>
+    </div>
+    <div class="modal" id="classModal" style="display: none;">
+        <div class="modal-content">
+            <h3>Edit Class</h3>
+            <label for="editClassName">Course Name:</label>
+            <input type="text" id="editClassName" placeholder="e.g., Calculus I">
+            <label for="editClassDayTime">Day/Time:</label>
+            <input type="text" id="editClassDayTime" placeholder="e.g., Mon/Wed 10:00-11:30">
+            <label for="editClassProfessor">Professor:</label>
+            <input type="text" id="editClassProfessor" placeholder="e.g., Dr. Smith">
+            <button onclick="saveClassEdit()">Save</button>
+            <button onclick="closeModal('classModal')">Cancel</button>
+        </div>
+    </div>
+    <div class="modal" id="clearDataModal" style="display: none;">
+        <div class="modal-content">
+            <h3>Clear All Data</h3>
+            <p>Are you sure you want to clear all data? This cannot be undone.</p>
+            <button onclick="clearAllData()">Confirm</button>
+            <button onclick="closeModal('clearDataModal')">Cancel</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
